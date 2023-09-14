@@ -12,6 +12,7 @@ globals [
   ;;blobal-max-trade-times         ;;the max trading times for a traders. If more than this number, the trader will leave the market
   ;;market-maker-rate              ;;to keep the market running well, we assume that there are some traders will only buy the token and never sell.
                                    ;;We call them market maker, This is the ratio of marker maker from the totals traders
+  ;;kol-min-influence              ;;only the turtles which %influence not less than this number will be considered as kol
   ;;initial-liquidity              ;;initial liquidity for token A and token B(USDT), as we assume the initial rate is zero, the both liquidity is same
   ;;new-cash-x                     ;;during the emulation, we can ajust this value to emulate new money come in or out.
 
@@ -22,7 +23,6 @@ globals [
   current-price                    ;;current exchange rate
   influence-factor                 ;;will be devided by random influence(0~100), less factor, more average influence. Suggest 2-9
   max-stop-loss                    ;;max stop loss of each trader
-  kol-min-influence                ;;only the turtles which %influence not less than this number will be considered as kol
   %sell-on-stop-limit              ;;if the stop-limit was touched, buy immediately or wait
   %sell-on-stop-loss               ;;if the stop-loss was touched, sale immediately or wait
 
@@ -67,7 +67,7 @@ to setup
   create-turtles initial-traders [
     set-turtle who true false true
   ]
-
+  show-params
   reset-ticks
 end
 
@@ -304,7 +304,7 @@ end
 
 to-report trade-strategy1 [check-buy trader-id]
   ifelse check-buy [report amount = 0 and random 100 < bullish-index * 10]
-  [
+ [
     let re false
     ask turtle trader-id [
       set re amount > 0 and
@@ -525,7 +525,7 @@ count turtles
 
 PLOT
 15
-505
+545
 310
 810
 Asset change %
@@ -543,9 +543,9 @@ PENS
 
 SWITCH
 15
-420
+455
 160
-453
+488
 influence
 influence
 0
@@ -569,9 +569,9 @@ HORIZONTAL
 
 SWITCH
 15
-460
+495
 160
-493
+528
 use-stop-loss
 use-stop-loss
 0
@@ -580,9 +580,9 @@ use-stop-loss
 
 SWITCH
 170
-460
+495
 310
-493
+528
 use-max-hold-days
 use-max-hold-days
 1
@@ -606,9 +606,9 @@ HORIZONTAL
 
 SWITCH
 170
-420
+455
 310
-453
+488
 show-scope
 show-scope
 1
@@ -620,16 +620,16 @@ TEXTBOX
 17
 300
 42
-Crypto market modeling (ver 0.1)
+Crypto market modeling (ver 1.0)
 16
 0.0
 1
 
 SLIDER
 170
-375
+415
 310
-408
+448
 new-cash-x
 new-cash-x
 1
@@ -705,15 +705,30 @@ HORIZONTAL
 
 SLIDER
 15
-375
+415
 160
-408
+448
 initial-liquidity
 initial-liquidity
 100000
 10000000
 2100000.0
 500000
+1
+NIL
+HORIZONTAL
+
+SLIDER
+15
+375
+310
+408
+kol-min-influence
+kol-min-influence
+0
+10
+5.0
+1
 1
 NIL
 HORIZONTAL
