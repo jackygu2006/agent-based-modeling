@@ -620,7 +620,7 @@ TEXTBOX
 17
 300
 42
-Crypto market modeling (ver 0.1)
+Crypto market modeling (ver 1.0)
 16
 0.0
 1
