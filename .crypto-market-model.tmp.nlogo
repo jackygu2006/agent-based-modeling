@@ -67,7 +67,7 @@ to setup
   create-turtles initial-traders [
     set-turtle who true false true
   ]
-  show-params
+
   reset-ticks
 end
 
