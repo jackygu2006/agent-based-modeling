@@ -9,7 +9,7 @@ globals [
   ;;vesting-period                 ;;if there is vesting plan for the ico participants, set the period of linear vesting
                                    ;;vesting-period is only available while the ico-distribute-ratio is not zero.
   ;;bullish-index                  ;;1-10, 0 is bearish, 10 is bullish, 5 is balance
-  ;;blobal-max-trade-times         ;;the max trading times for a traders. If more than this number, the trader will leave the market
+  ;;global-max-trade-times         ;;the max trading times for a traders. If more than this number, the trader will leave the market
   ;;market-maker-rate              ;;to keep the market running well, we assume that there are some traders will only buy the token and never sell.
                                    ;;We call them market maker, This is the ratio of marker maker from the totals traders
   ;;kol-min-influence              ;;only the turtles which %influence not less than this number will be considered as kol
@@ -78,7 +78,6 @@ to initialize-params
   set max-ticks 300
   set influence-factor 5
   set max-stop-loss 90
-  set kol-min-influence 5
   set %sell-on-stop-loss 80
   set %sell-on-stop-limit 80
 
@@ -205,7 +204,7 @@ to check-around [kol-turtle]
   ask turtle kol-turtle [
     ;;1- for kol himself
     if not checked-today [
-      ;;kol judge by himself
+      ;;kol judge by kol himself
       if trade-strategy1 true who [buy who]
       if trade-strategy1 false who [sell who]
       set checked-today true
@@ -429,7 +428,7 @@ initial-traders
 initial-traders
 1
 200
-12.0
+10.0
 1
 1
 NIL
@@ -597,7 +596,7 @@ global-max-trade-times
 global-max-trade-times
 5
 50
-13.0
+8.0
 1
 1
 NIL
@@ -725,7 +724,7 @@ SLIDER
 kol-min-influence
 kol-min-influence
 0
-10
+8
 5.0
 1
 1
